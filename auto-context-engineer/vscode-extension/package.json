@@ -1,0 +1,151 @@
+{
+  "name": "auto-context-engineer",
+  "displayName": "Auto Context Engineer",
+  "description": "Privacy-first context capture and management for developers",
+  "version": "1.0.0",
+  "publisher": "auto-context-engineer",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning",
+    "Snippets"
+  ],
+  "keywords": [
+    "context",
+    "ai",
+    "llm",
+    "summarization",
+    "privacy"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "autoContextEngineer.captureContext",
+        "title": "Capture Current Context",
+        "category": "Auto Context Engineer"
+      },
+      {
+        "command": "autoContextEngineer.summarizeContext",
+        "title": "Summarize Context",
+        "category": "Auto Context Engineer"
+      },
+      {
+        "command": "autoContextEngineer.searchContext",
+        "title": "Search Context",
+        "category": "Auto Context Engineer"
+      },
+      {
+        "command": "autoContextEngineer.openDashboard",
+        "title": "Open Dashboard",
+        "category": "Auto Context Engineer"
+      },
+      {
+        "command": "autoContextEngineer.openSettings",
+        "title": "Open Settings",
+        "category": "Auto Context Engineer"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "autoContextEngineer.captureContext",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "autoContextEngineer.searchContext",
+        "key": "ctrl+shift+f",
+        "mac": "cmd+shift+f"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "autoContextEngineer.captureContext",
+          "group": "autoContextEngineer",
+          "when": "editorTextFocus"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "autoContextEngineer.openDashboard",
+          "when": "view == autoContextEngineer.contextView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "autoContextEngineer.contextView",
+          "name": "Auto Context Engineer",
+          "when": "autoContextEngineer.enabled"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "autoContextEngineer",
+          "title": "Auto Context Engineer",
+          "icon": "$(symbol-class)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Auto Context Engineer",
+      "properties": {
+        "autoContextEngineer.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Auto Context Engineer"
+        },
+        "autoContextEngineer.autoCapture": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically capture context on file changes"
+        },
+        "autoContextEngineer.captureThreshold": {
+          "type": "number",
+          "default": 1000,
+          "description": "Token threshold for automatic context capture"
+        },
+        "autoContextEngineer.summarizationMethod": {
+          "type": "string",
+          "enum": ["local", "cloud"],
+          "default": "local",
+          "description": "Preferred summarization method"
+        },
+        "autoContextEngineer.localOnly": {
+          "type": "boolean",
+          "default": true,
+          "description": "Operate in local-only mode (privacy-first)"
+        },
+        "autoContextEngineer.syncWithBrowser": {
+          "type": "boolean",
+          "default": false,
+          "description": "Sync data with browser extension"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  }
+}

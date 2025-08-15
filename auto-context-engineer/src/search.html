@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Context Engineer - Advanced Search</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f9fafb;
+        }
+        
+        #root {
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        /* Loading state */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #6b7280;
+            font-size: 16px;
+        }
+        
+        /* Error state */
+        .error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .error-icon {
+            font-size: 48px;
+        }
+        
+        .error-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ef4444;
+            margin: 0;
+        }
+        
+        .error-message {
+            color: #6b7280;
+            font-size: 14px;
+            max-width: 400px;
+            line-height: 1.5;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .error-button {
+            padding: 10px 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .error-button:hover {
+            background: #f3f4f6;
+        }
+        
+        .error-button.primary {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .error-button.primary:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="loading">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <div class="loading-text">Loading Advanced Search...</div>
+        </div>
+    </div>
+    
+    <script type="module" src="./search.tsx"></script>
+</body>
+</html>

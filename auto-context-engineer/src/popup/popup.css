@@ -1,0 +1,254 @@
+/* Popup Component Styles */
+
+.popup-container {
+  width: 350px;
+  min-height: 400px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.popup-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px;
+  border-radius: 8px 8px 0 0;
+}
+
+.popup-title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.popup-subtitle {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.popup-tabs {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 16px;
+}
+
+.popup-tab {
+  flex: 1;
+  padding: 12px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.popup-tab:hover {
+  background: #f8f9fa;
+  color: #333;
+}
+
+.popup-tab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.popup-content {
+  padding: 0 16px 16px;
+}
+
+.popup-section-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.popup-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.popup-stat-card {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.popup-stat-number {
+  font-size: 20px;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.popup-stat-label {
+  font-size: 11px;
+  color: #666;
+}
+
+.popup-button-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.popup-button {
+  flex: 1;
+  padding: 8px 12px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.popup-button:hover {
+  background: #5a6fd8;
+}
+
+.popup-button.secondary {
+  background: #f8f9fa;
+  color: #667eea;
+  border: 1px solid #e0e0e0;
+}
+
+.popup-button.secondary:hover {
+  background: #e9ecef;
+}
+
+.popup-button.success {
+  background: #28a745;
+}
+
+.popup-button.success:hover {
+  background: #218838;
+}
+
+.popup-info-card {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.popup-info-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.popup-info-text {
+  font-size: 11px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.popup-monitor-section {
+  margin-bottom: 16px;
+}
+
+.popup-monitor-title {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.popup-monitor-content {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.popup-monitor-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.popup-monitor-label {
+  font-size: 12px;
+}
+
+.popup-monitor-value {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.popup-progress-bar {
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.popup-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transition: width 0.3s ease;
+}
+
+.popup-progress-text {
+  font-size: 11px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.popup-monitor-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.popup-monitor-tag {
+  padding: 4px 8px;
+  background: #667eea;
+  color: white;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.popup-no-monitors {
+  font-size: 11px;
+  color: #666;
+}
+
+.popup-status-indicator {
+  font-weight: 600;
+}
+
+.popup-status-indicator.operational {
+  color: #28a745;
+}
+
+.popup-status-indicator.degraded {
+  color: #ffc107;
+}
+
+.popup-status-indicator.down {
+  color: #dc3545;
+}
+
+.popup-footer-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.popup-progress-bar.warning .popup-progress-fill {
+  background: #ffc107;
+}
+
+.popup-progress-bar.danger .popup-progress-fill {
+  background: #dc3545;
+}
+
+.popup-progress-bar.success .popup-progress-fill {
+  background: #28a745;
+}

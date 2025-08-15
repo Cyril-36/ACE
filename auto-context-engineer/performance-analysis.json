@@ -1,0 +1,30 @@
+{
+  "timestamp": "2025-08-12T10:39:35.805Z",
+  "metrics": {
+    "codeComplexity": {
+      "totalFiles": 138,
+      "totalLines": 49205,
+      "totalFunctions": 171,
+      "totalClasses": 89,
+      "totalComponents": 11,
+      "avgLinesPerFile": 357,
+      "avgFunctionsPerFile": 1
+    },
+    "dependencies": {
+      "production": 2,
+      "development": 23,
+      "total": 25
+    },
+    "fileCount": 0,
+    "totalLines": 0
+  },
+  "scores": {
+    "complexity": 40,
+    "optimization": 90,
+    "overall": 65
+  },
+  "recommendations": [
+    "Some files are large (>300 lines). Consider breaking them into smaller modules.",
+    "Low component memoization rate. Consider using React.memo for better performance."
+  ]
+}

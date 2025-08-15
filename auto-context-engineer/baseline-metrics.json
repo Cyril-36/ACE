@@ -1,0 +1,13 @@
+{
+  "bundleSize": 2340644,
+  "memoryUsage": 4983,
+  "loadTime": 2341,
+  "renderTime": 60,
+  "codeComplexity": {
+    "totalFiles": 135,
+    "totalLines": 48977,
+    "totalFunctions": 170,
+    "avgLinesPerFile": 363
+  },
+  "timestamp": 1754995015505
+}
