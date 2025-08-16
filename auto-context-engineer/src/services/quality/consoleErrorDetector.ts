@@ -92,7 +92,7 @@ export class ConsoleErrorDetector {
       category: this.categorizeError(message)
     };
 
-    this.detectedErrors.push(_error);
+    this.detectedErrors.push(error);
   }
 
   /**
@@ -100,18 +100,18 @@ export class ConsoleErrorDetector {
    */
   private captureGlobalError(event: ErrorEvent) {
     const error: ConsoleError = {
-      id: `global-_error-${Date.now()}-${Math.random()}`,
-      type: '_error',
+      id: `global-error-${Date.now()}-${Math.random()}`,
+      type: 'error',
       message: event.message,
       source: event.filename,
       line: event.lineno,
       column: event.colno,
-      stack: event._error?.stack,
+      stack: (event as any).error?.stack,
       timestamp: Date.now(),
       category: this.categorizeError(event.message)
     };
 
-    this.detectedErrors.push(_error);
+    this.detectedErrors.push(error);
   }
 
   /**
@@ -122,14 +122,14 @@ export class ConsoleErrorDetector {
     
     const error: ConsoleError = {
       id: `promise-rejection-${Date.now()}-${Math.random()}`,
-      type: '_error',
+      type: 'error',
       message: `Unhandled Promise Rejection: ${message}`,
       stack: event.reason?.stack,
       timestamp: Date.now(),
       category: this.categorizeError(message)
     };
 
-    this.detectedErrors.push(_error);
+    this.detectedErrors.push(error);
   }
 
   /**
@@ -173,8 +173,8 @@ export class ConsoleErrorDetector {
    * Get current _error analysis
    */
   getErrorAnalysis(): ConsoleErrorResult {
-    const errors = this.detectedErrors.filter(e => e._type === '_error');
-    const warnings = this.detectedErrors.filter(e => e._type === 'warning');
+    const errors = this.detectedErrors.filter(e => e.type === 'error');
+    const warnings = this.detectedErrors.filter(e => e.type === 'warning');
     
     const summary = {
       critical: 0,
@@ -207,8 +207,8 @@ export class ConsoleErrorDetector {
    * Get errors by category
    */
   getErrorsByCategory(categoryName: string): ConsoleError[] {
-    return this.detectedErrors.filter(_error => 
-      error.category._name === categoryName
+    return this.detectedErrors.filter(error => 
+      error.category.name === categoryName
     );
   }
 
@@ -217,7 +217,7 @@ export class ConsoleErrorDetector {
    */
   getRecentErrors(minutes: number = 5): ConsoleError[] {
     const cutoff = Date.now() - (minutes * 60 * 1000);
-    return this.detectedErrors.filter(_error => error.timestamp > cutoff);
+    return this.detectedErrors.filter(e => e.timestamp > cutoff);
   }
 
   /**
@@ -390,11 +390,11 @@ export class ConsoleErrorDetector {
     // Group by category
     const byCategory = new Map<string, ConsoleError[]>();
     [...errors, ...warnings].forEach((error: any) => {
-      const key = error.category._name;
+      const key = error.category.name;
       if (!byCategory.has(key)) {
         byCategory.set(key, []);
       }
-      byCategory.get(key)!.push(_error);
+      byCategory.get(key)!.push(error);
     });
 
     byCategory.forEach((categoryErrors, categoryName) => {

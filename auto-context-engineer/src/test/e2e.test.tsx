@@ -1,3 +1,4 @@
+import React from 'react';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 // Testing library imports for future use
@@ -143,8 +144,8 @@ describe('End-to-End Performance Tests', () => {
 
         // Generate performance report
         const report = globalPerformanceMonitor.generateReport();
-        expect(report._summary).toBeDefined();
-        expect(report._metrics).toBeDefined();
+        expect(report.summary).toBeDefined();
+        expect(report.metrics).toBeDefined();
 
       } catch (error) {
         globalPerformanceMonitor.endTimer('e2e-workflow');
@@ -259,7 +260,7 @@ describe('End-to-End Performance Tests', () => {
 
         // Check for memory alerts
         const memoryAlerts = globalPerformanceMonitor.getAlerts('high')
-          .filter(alert => alert._type === 'memory');
+          .filter(alert => alert.type === 'memory');
         
         console.log(`Generated ${memoryAlerts.length} memory alerts during pressure test`);
 
@@ -336,7 +337,7 @@ describe('End-to-End Performance Tests', () => {
       const memoryThreshold = 50; // MB
       if (globalPerformanceMonitor.getMetrics().memory.used < memoryThreshold * 1024 * 1024) {
         // Mock high memory usage to trigger recommendations
-        (globalPerformanceMonitor as unknown as { metrics: { memory: { used: number } } })._metrics.memory.used = memoryThreshold * 1024 * 1024 + 1024 * 1024;
+        (globalPerformanceMonitor as unknown as { metrics: { memory: { used: number } } }).metrics.memory.used = memoryThreshold * 1024 * 1024 + 1024 * 1024;
       }
       
       const updatedAlerts = globalPerformanceMonitor.getAlerts();
@@ -496,7 +497,7 @@ describe('End-to-End Performance Tests', () => {
       // Simulate search
       await new Promise(resolve => setTimeout(resolve, 20));
       const searchTime = globalPerformanceMonitor.endTimer('search-benchmark');
-      expect(searchTime).toBeLessThan(benchmarks._search);
+      expect(searchTime).toBeLessThan(benchmarks.search);
 
       // Test storage performance
       globalPerformanceMonitor.startTimer('storage-benchmark');

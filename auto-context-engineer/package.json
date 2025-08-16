@@ -23,8 +23,7 @@
     "perf:report": "node scripts/generatePerformanceReport.js",
     "perf:analyze": "node scripts/analyzePerformance.cjs",
     "perf:validate": "node scripts/validateOptimizations.cjs",
-    "optimize": "npm run perf:analyze && npm run perf:validate",
-    "prepare": "husky install"
+    "optimize": "npm run perf:analyze && npm run perf:validate"
   },
   "dependencies": {
     "react": "^18.2.0",

@@ -105,7 +105,7 @@ Object.defineProperty(global, 'atob', {
 
 // Mock DOM APIs for React components
 Object.defineProperty(window, 'matchMedia', {
-  _writable: true,
+  writable: true,
   value: vi.fn().mockImplementation(query => ({
     matches: false,
     media: query,

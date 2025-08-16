@@ -121,7 +121,7 @@ export class SearchOrchestrator implements BackgroundModule {
       }
       
       // Perform search
-      const searchPromise = this.searchService._search(query);
+      const searchPromise = this.searchService.search(query);
       this.activeSearches.set(searchId, searchPromise);
       
       const results = await searchPromise;
@@ -256,7 +256,7 @@ export class SearchOrchestrator implements BackgroundModule {
     
     return {
       ...searchServiceStats,
-      orchestratorMetrics: { ...this._metrics },
+      orchestratorMetrics: { ...this.metrics },
       activeSearches: this.activeSearches.size,
       queuedIndexOperations: this.indexingQueue.length,
     };
@@ -359,19 +359,19 @@ export class SearchOrchestrator implements BackgroundModule {
   }
 
   private updateSearchMetrics(searchTime: number): void {
-    this._metrics.totalSearches++;
-    this._metrics.avgSearchTime = 
-      (this._metrics.avgSearchTime * (this._metrics.totalSearches - 1) + searchTime) / 
-      this._metrics.totalSearches;
-    this._metrics.lastActivity = Date.now();
+    this.metrics.totalSearches++;
+    this.metrics.avgSearchTime = 
+      (this.metrics.avgSearchTime * (this.metrics.totalSearches - 1) + searchTime) / 
+      this.metrics.totalSearches;
+    this.metrics.lastActivity = Date.now();
   }
 
   private updateIndexMetrics(indexTime: number): void {
-    this._metrics.totalIndexOperations++;
-    this._metrics.avgIndexTime = 
-      (this._metrics.avgIndexTime * (this._metrics.totalIndexOperations - 1) + indexTime) / 
-      this._metrics.totalIndexOperations;
-    this._metrics.lastActivity = Date.now();
+    this.metrics.totalIndexOperations++;
+    this.metrics.avgIndexTime = 
+      (this.metrics.avgIndexTime * (this.metrics.totalIndexOperations - 1) + indexTime) / 
+      this.metrics.totalIndexOperations;
+    this.metrics.lastActivity = Date.now();
   }
 
   private generateSearchId(): string {
@@ -395,9 +395,9 @@ export class SearchOrchestrator implements BackgroundModule {
   // Health check
   isHealthy(): boolean {
     const now = Date.now();
-    const timeSinceLastActivity = now - this._metrics.lastActivity;
+    const timeSinceLastActivity = now - this.metrics.lastActivity;
     
     // Consider healthy if active within last 5 minutes or no activity expected
-    return timeSinceLastActivity < 300000 || this._metrics.totalSearches === 0;
+    return timeSinceLastActivity < 300000 || this.metrics.totalSearches === 0;
   }
 }

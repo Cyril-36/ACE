@@ -122,14 +122,14 @@ export class BrowserDetection {
    * Check if the browser is Firefox
    */
   isFirefox(): boolean {
-    return this.detectBrowser()._type === BrowserType.FIREFOX;
+    return this.detectBrowser().type === BrowserType.FIREFOX;
   }
 
   /**
    * Check if the browser is Edge
    */
   isEdge(): boolean {
-    return this.detectBrowser()._type === BrowserType.EDGE;
+    return this.detectBrowser().type === BrowserType.EDGE;
   }
 
   /**
