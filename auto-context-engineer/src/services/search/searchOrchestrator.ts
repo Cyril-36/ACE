@@ -39,8 +39,6 @@ interface SearchEventPayload {
 }
 
 export class SearchOrchestrator implements BackgroundModule {
-  _name: string = "SearchOrchestrator";
-  name: string = "SearchOrchestrator";
   _name = 'SearchOrchestrator';
   
   private config: SearchOrchestratorConfig;

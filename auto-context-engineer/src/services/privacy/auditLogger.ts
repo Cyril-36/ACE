@@ -99,7 +99,7 @@ export class AuditLogger {
       event,
       action,
       dataType,
-      success,
+      _success: success,
       details,
       userId,
       sessionId,
@@ -157,7 +157,7 @@ export class AuditLogger {
   // Generate comprehensive audit report
   async generateAuditReport(filter?: AuditFilter): Promise<AuditReport> {
     const entries = await this.getAuditEntries(filter, 10000); // Get more entries for report
-    const violations = entries.filter(entry => !entry.success || entry.riskLevel === RiskLevel.CRITICAL);
+    const violations = entries.filter(entry => !entry._success || entry.riskLevel === RiskLevel.CRITICAL);
 
     // Calculate summary statistics
     const riskDistribution: Record<RiskLevel, number> = {
@@ -173,12 +173,12 @@ export class AuditLogger {
 
     let successCount = 0;
 
-    entries.forEach((entry: any) => {
+    entries.forEach((entry: EnhancedAuditEntry) => {
       // Risk distribution
       riskDistribution[entry.riskLevel]++;
 
       // Compliance events
-      entry.complianceFlags.forEach((flag: any) => {
+      entry.complianceFlags.forEach((flag: ComplianceFlag) => {
         complianceEvents[flag] = (complianceEvents[flag] || 0) + 1;
       });
 
@@ -189,7 +189,7 @@ export class AuditLogger {
       dataTypeCounts[entry.dataType] = (dataTypeCounts[entry.dataType] || 0) + 1;
 
       // Success rate
-      if (entry.success) successCount++;
+      if (entry._success) successCount++;
     });
 
     // Top actions and data types
@@ -283,7 +283,7 @@ export class AuditLogger {
   // Event handlers
   private async handleContextEvent(event: AuditEvent): Promise<void> {
     await this.logEvent(
-      event._type,
+      event.type,
       'context_processing',
       'context',
       true,
@@ -293,7 +293,7 @@ export class AuditLogger {
 
   private async handleSummaryEvent(event: AuditEvent): Promise<void> {
     await this.logEvent(
-      event._type,
+      event.type,
       'summarization',
       'summary',
       true,
@@ -303,7 +303,7 @@ export class AuditLogger {
 
   private async handleStorageEvent(event: AuditEvent): Promise<void> {
     await this.logEvent(
-      event._type,
+      event.type,
       'storage_operation',
       'storage',
       true,
@@ -313,7 +313,7 @@ export class AuditLogger {
 
   private async handleConsentEvent(event: AuditEvent): Promise<void> {
     await this.logEvent(
-      event._type,
+      event.type,
       'consent_request',
       'consent',
       true,
@@ -323,7 +323,7 @@ export class AuditLogger {
 
   private async handleViolationEvent(event: AuditEvent): Promise<void> {
     await this.logEvent(
-      event._type,
+      event.type,
       'privacy_violation',
       'violation',
       false,
@@ -481,7 +481,7 @@ export class AuditLogger {
       entry.event,
       entry.action,
       entry.dataType,
-      entry.String(success),
+      entry._success.toString(),
       entry.riskLevel,
       entry.complianceFlags.join(';'),
       entry.userId || '',

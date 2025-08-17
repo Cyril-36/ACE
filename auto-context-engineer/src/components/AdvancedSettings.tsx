@@ -61,7 +61,7 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
   preferences,
   onUpdatePreferences,
   onSave,
-  isSaving,
+  _isSaving,
   settingsService,
 }) => {
   const [activeTab, setActiveTab] = useState('performance');
@@ -173,7 +173,7 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
 
     try {
       const exportData = await settingsService.exportSettings();
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], { _type: 'application/json' });
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -887,9 +887,9 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
           type="button"
           className="save-button"
           onClick={onSave}
-          disabled={isSaving}
+          disabled={_isSaving}
         >
-          {isSaving ? 'Saving...' : '💾 Save Advanced Settings'}
+          {_isSaving ? 'Saving...' : '💾 Save Advanced Settings'}
         </button>
       </div>
 

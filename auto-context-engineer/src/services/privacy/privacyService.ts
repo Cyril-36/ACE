@@ -44,9 +44,7 @@ export interface ThreatDetectionAlert {
 }
 
 export class PrivacyService implements BackgroundModule {
-  _name: string = "PrivacyService";
-  name: string = "PrivacyService";
-  name = 'PrivacyService';
+  _name = 'PrivacyService';
   
   private eventBus: EventBus;
   // private storageService: IndexedDBStorageService;
@@ -629,7 +627,7 @@ export class PrivacyService implements BackgroundModule {
 
     // Missing consents
     const cloudEvents = auditReport.entries.filter(e => e.event.includes('CLOUD')).length;
-    const cloudConsents = consents.filter(c => c._type === ConsentType.CLOUD_PROCESSING && c.granted).length;
+    const cloudConsents = consents.filter(c => c.type === ConsentType.CLOUD_PROCESSING && c.granted).length;
     if (cloudEvents > 0 && cloudConsents === 0) {
       recommendations.push('Cloud operations detected without proper consent. Enable cloud consent management.');
     }

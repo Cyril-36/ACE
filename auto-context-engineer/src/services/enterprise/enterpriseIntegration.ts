@@ -152,7 +152,7 @@ export class EnterpriseIntegration {
             
             // Check for blocking violations
             const blockingViolations = violations.filter(v => 
-                v.action._type === 'block' && (v.severity === 'high' || v.severity === 'critical')
+                v.action.type === 'block' && (v.severity === 'high' || v.severity === 'critical')
             );
             
             // Generate alerts for critical violations
@@ -331,7 +331,7 @@ export class EnterpriseIntegration {
                             timestamp: threat.timestamp,
                             indicators: threat.indicators,
                             impact: threat.impact,
-                            status: threat._status
+                            status: threat.status
                         }
                     });
                 }
@@ -481,7 +481,7 @@ export class EnterpriseIntegration {
 
         if (filters) {
             if (filters.type) {
-                filteredAlerts = filteredAlerts.filter(a => a._type === filters.type);
+                filteredAlerts = filteredAlerts.filter(a => a.type === filters.type);
             }
             if (filters.severity) {
                 filteredAlerts = filteredAlerts.filter(a => a.severity === filters.severity);
@@ -627,7 +627,7 @@ export class EnterpriseIntegration {
             const row = [
                 event.id,
                 event.timestamp.toISOString(),
-                event._type,
+                event.type,
                 event.category,
                 event.severity,
                 event.user || '',
@@ -648,7 +648,7 @@ export class EnterpriseIntegration {
             xml += `  <Event>\n`;
             xml += `    <id>${event.id}</id>\n`;
             xml += `    <timestamp>${event.timestamp.toISOString()}</timestamp>\n`;
-            xml += `    <type>${event._type}</type>\n`;
+            xml += `    <type>${event.type}</type>\n`;
             xml += `    <category>${event.category}</category>\n`;
             xml += `    <severity>${event.severity}</severity>\n`;
             xml += `    <source>${event.source}</source>\n`;

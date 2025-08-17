@@ -188,7 +188,7 @@ export class PolicyEngine {
         
         // Check for blocking violations
         const blockingViolations = violations.filter(v => 
-            v.action._type === 'block' && v.severity === 'critical'
+            v.action.type === 'block' && v.severity === 'critical'
         );
 
         if (blockingViolations.length > 0) {
@@ -415,7 +415,7 @@ export class PolicyEngine {
     }
 
     private validateRule(rule: PolicyRule): void {
-        if (!rule.id || !rule._name || !rule.conditions || !rule.actions) {
+        if (!rule.id || !rule.name || !rule.conditions || !rule.actions) {
             throw new ExtensionError('Invalid policy rule structure', ErrorCode.INVALID_INPUT, { rule });
         }
 
@@ -448,7 +448,7 @@ export class PolicyEngine {
                     id: `violation_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                     timestamp: new Date(),
                     ruleId: rule.id,
-                    ruleName: rule._name,
+                    ruleName: rule.name,
                     severity: rule.severity,
                     context: {
                         setting: context.setting as string,
@@ -463,7 +463,7 @@ export class PolicyEngine {
             }
             return null;
         } catch (error) {
-            console.error(`[PolicyEngine] Rule evaluation failed for ${rule._name}:`, error);
+            console.error(`[PolicyEngine] Rule evaluation failed for ${rule.name}:`, error);
             return null;
         }
     }
@@ -512,7 +512,7 @@ export class PolicyEngine {
         return {
             id: `violation_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             ruleId: rule.id,
-            ruleName: rule._name,
+            ruleName: rule.name,
             severity: rule.severity,
             timestamp: new Date(),
             context,
