@@ -23,7 +23,12 @@
     "perf:report": "node scripts/generatePerformanceReport.js",
     "perf:analyze": "node scripts/analyzePerformance.cjs",
     "perf:validate": "node scripts/validateOptimizations.cjs",
-    "optimize": "npm run perf:analyze && npm run perf:validate"
+    "optimize": "npm run perf:analyze && npm run perf:validate",
+    "errors:detect": "node scripts/enhancedErrorDetection.cjs",
+    "errors:search": "node scripts/quickErrorSearch.cjs",
+    "errors:property": "node scripts/quickErrorSearch.cjs Property",
+    "errors:import": "node scripts/quickErrorSearch.cjs import",
+    "errors:type": "node scripts/quickErrorSearch.cjs type"
   },
   "dependencies": {
     "react": "^18.2.0",
