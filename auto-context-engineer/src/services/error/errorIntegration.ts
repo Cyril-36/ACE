@@ -224,10 +224,10 @@ export class ErrorIntegrationService {
 
           return {
             success: true,
-            message: `Switched to ${bestProvider._name}`,
+            message: `Switched to ${bestProvider.name}`,
             data: { 
               fallbackProvider: bestProvider.id,
-              providerName: bestProvider._name,
+              providerName: bestProvider.name,
             },
           };
         } catch (fallbackError) {

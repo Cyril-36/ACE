@@ -351,7 +351,7 @@ export class SecurityControls {
         }
 
         // Update threat status
-        threat._status = 'mitigated';
+        threat.status = 'mitigated';
         
         await this.logSecurityEvent({
             type: 'threat_detected',
@@ -384,7 +384,7 @@ export class SecurityControls {
         const eventsBySeverity: Record<string, number> = {};
         
         for (const event of periodEvents) {
-            eventsByType[event._type] = (eventsByType[event._type] || 0) + 1;
+            eventsByType[event.type] = (eventsByType[event.type] || 0) + 1;
             eventsBySeverity[event.severity] = (eventsBySeverity[event.severity] || 0) + 1;
         }
 
@@ -405,8 +405,8 @@ export class SecurityControls {
             threats: {
                 total: periodThreats.length,
                 byLevel: threatsByLevel,
-                mitigated: periodThreats.filter(t => t._status === 'mitigated').length,
-                active: periodThreats.filter(t => t._status === 'detected' || t._status === 'investigating').length
+                mitigated: periodThreats.filter(t => t.status === 'mitigated').length,
+                active: periodThreats.filter(t => t.status === 'detected' || t.status === 'investigating').length
             },
             compliance: {
                 score: 85, // Would be calculated based on actual compliance data
@@ -432,7 +432,7 @@ export class SecurityControls {
 
         if (filters) {
             if (filters.type) {
-                filteredEvents = filteredEvents.filter(e => e._type === filters.type);
+                filteredEvents = filteredEvents.filter(e => e.type === filters.type);
             }
             if (filters.severity) {
                 filteredEvents = filteredEvents.filter(e => e.severity === filters.severity);
@@ -565,7 +565,7 @@ export class SecurityControls {
                 if (rule.action === 'deny') {
                     // Check if rule applies to this context
                     if (this.ruleApplies(rule, resource, action)) {
-                        return { allowed: false, reason: `Blocked by policy: ${policy._name}` };
+                        return { allowed: false, reason: `Blocked by policy: ${policy.name}` };
                     }
                 }
             }

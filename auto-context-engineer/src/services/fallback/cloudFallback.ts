@@ -62,7 +62,7 @@ export class LocalSummarizationProvider implements CloudProvider {
       summary,
       method: 'local',
       tokens: this.estimateTokens(summary),
-      _cost: 0,
+      cost: 0,
       quality: 0.6, // Local processing has lower quality
       metadata: {
         originalSentences: sentences.length,
@@ -137,7 +137,7 @@ export class CloudProviderWrapper implements CloudProvider {
 
   async summarize(text: string, options?: SummarizationOptions): Promise<SummarizationResult> {
     if (!this.available) {
-      throw new Error(`${this._name} provider not available`);
+      throw new Error(`${this.name} provider not available`);
     }
 
     try {
@@ -148,7 +148,7 @@ export class CloudProviderWrapper implements CloudProvider {
         method: this.id,
       };
     } catch (error) {
-      throw new Error(`${this._name} summarization failed: ${(error as Error).message}`);
+      throw new Error(`${this.name} summarization failed: ${(error as Error).message}`);
     }
   }
 
@@ -201,7 +201,7 @@ export class CloudFallbackService {
         await globalErrorHandler.handleError(
           globalErrorHandler.createError(
             ErrorCode.PROCESSING_ERROR,
-            `Successfully used ${provider._name} for summarization`,
+            `Successfully used ${provider.name} for summarization`,
             undefined,
             true,
             { provider: provider.id, fallback: provider.priority > 1 }
@@ -251,7 +251,7 @@ export class CloudFallbackService {
   }> {
     return this.providers.map(provider => ({
       id: provider.id,
-      name: provider._name,
+      name: provider.name,
       available: provider.available,
       healthy: this.healthStatus.get(provider.id) ?? false,
       priority: provider.priority,

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { SecurityControls } from '../securityControls';
 import { EnterpriseConfig } from '../policyEngine';
 import { EventBus } from '../../background/eventBus';
-import { Context } from '../../types';
+import { Context } from '../../../types';
 
 // Tests for Enterprise Security Controls
 

@@ -270,9 +270,9 @@ const AnalyticsDashboardComponent: React.FC<AnalyticsDashboardProps> = ({ analyt
             <div className="metrics-grid">
               <div className="metric-card">
                 <h2>Total Contexts</h2>
-                <div className="metric-value">{metrics.totalContexts.toLocaleString()}</div>
+                <div className="metric-value">{metrics._totalContexts.toLocaleString()}</div>
                 <div className="metric-detail">
-                  Today: {metrics.contextsToday} | This Week: {metrics.contextsThisWeek}
+                  Today: {metrics._contextsToday} | This Week: {metrics.contextsThisWeek}
                 </div>
               </div>
 
@@ -280,7 +280,7 @@ const AnalyticsDashboardComponent: React.FC<AnalyticsDashboardProps> = ({ analyt
                 <h2>Total Summaries</h2>
                 <div className="metric-value">{metrics.totalSummaries.toLocaleString()}</div>
                 <div className="metric-detail">
-                  Today: {metrics.summariesToday} | Avg Compression: {(metrics.averageCompressionRatio * 100).toFixed(1)}%
+                  Today: {metrics.summariesToday} | Avg Compression: {(metrics._averageCompressionRatio * 100).toFixed(1)}%
                 </div>
               </div>
 
@@ -296,7 +296,7 @@ const AnalyticsDashboardComponent: React.FC<AnalyticsDashboardProps> = ({ analyt
               <div className="metric-card">
                 <h2>Cloud Usage</h2>
                 <div className="metric-value">
-                  ${Object.values(metrics.estimatedCloudCosts).reduce((a, b) => a + b, 0).toFixed(2)}
+                  ${Object.values(metrics._estimatedCloudCosts).reduce((a: number, b: number) => a + b, 0).toFixed(2)}
                 </div>
                 <div className="metric-detail">
                   API Calls: {Object.values(metrics.cloudApiCalls).reduce((a, b) => a + b, 0)}

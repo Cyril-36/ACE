@@ -106,7 +106,7 @@ export class PolicyEngine {
         result.allowed,
         {
           ruleId: rule.id,
-          ruleName: rule._name,
+          ruleName: rule.name,
           action: result.action,
           requiresConsent: result.requiresConsent,
         }
@@ -140,7 +140,7 @@ export class PolicyEngine {
   // Add or update a policy rule
   addRule(rule: PolicyRule): void {
     this.rules.set(rule.id, rule);
-    console.log(`[PolicyEngine] Added rule: ${rule._name}`);
+    console.log(`[PolicyEngine] Added rule: ${rule.name}`);
   }
 
   // Remove a policy rule
@@ -356,7 +356,7 @@ export class PolicyEngine {
         return { allowed: true, action: rule.action, ruleId: rule.id };
 
       case PolicyAction.DENY: {
-        const violation = await this.createViolation(rule.id, event, 'medium', `Denied by rule: ${rule._name}`);
+        const violation = await this.createViolation(rule.id, event, 'medium', `Denied by rule: ${rule.name}`);
         return { allowed: false, action: rule.action, ruleId: rule.id, violation };
       }
 
@@ -379,7 +379,7 @@ export class PolicyEngine {
           'policy_log_only',
           'policy',
           true,
-          { ruleId: rule.id, ruleName: rule._name }
+          { ruleId: rule.id, ruleName: rule.name }
         );
         return { allowed: true, action: rule.action, ruleId: rule.id };
 
@@ -429,7 +429,7 @@ export class PolicyEngine {
       id: this.generateViolationId(),
       timestamp: Date.now(),
       ruleId,
-      ruleName: rule?._name || 'Unknown Rule',
+      ruleName: rule?.name || 'Unknown Rule',
       event,
       severity,
       description,
@@ -476,7 +476,7 @@ export class PolicyEngine {
       timestamp: Date.now(),
       event,
       ruleId: rule.id,
-      ruleName: rule._name,
+      ruleName: rule.name,
       reason: 'Policy rule triggered quarantine',
     };
 

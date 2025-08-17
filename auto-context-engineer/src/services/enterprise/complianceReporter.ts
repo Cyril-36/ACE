@@ -291,7 +291,7 @@ export class ComplianceReporter {
 
         if (filters) {
             if (filters.type) {
-                filteredEvents = filteredEvents.filter(e => e._type === filters.type);
+                filteredEvents = filteredEvents.filter(e => e.type === filters.type);
             }
             if (filters.category) {
                 filteredEvents = filteredEvents.filter(e => e.category === filters.category);
@@ -334,8 +334,8 @@ export class ComplianceReporter {
     private generateSummary(events: AuditEvent[]): ComplianceSummary {
         const totalEvents = events.length;
         const criticalEvents = events.filter(e => e.severity === 'critical').length;
-        const externalTransfers = events.filter(e => e._type === 'external_transfer').length;
-        const userConsents = events.filter(e => e._type === 'user_consent').length;
+        const externalTransfers = events.filter(e => e.type === 'external_transfer').length;
+        const userConsents = events.filter(e => e.type === 'user_consent').length;
 
         // Calculate compliance score based on various factors
         let complianceScore = 100;
@@ -382,7 +382,7 @@ export class ComplianceReporter {
                             lastVerified: new Date()
                         }
                     ],
-                    evidence: events.filter(e => e._type === 'data_access').map(e => ({
+                    evidence: events.filter(e => e.type === 'data_access').map(e => ({
                         type: 'log' as const,
                         description: `Data access: ${e.action}`,
                         timestamp: e.timestamp,
@@ -459,7 +459,7 @@ export class ComplianceReporter {
                 collected: events.filter(e => e.action.includes('capture')).length,
                 processed: events.filter(e => e.action.includes('process')).length,
                 stored: events.filter(e => e.action.includes('store')).length,
-                transferred: events.filter(e => e._type === 'external_transfer').length,
+                transferred: events.filter(e => e.type === 'external_transfer').length,
                 deleted: events.filter(e => e.action.includes('delete')).length
             }
         ];
@@ -477,7 +477,7 @@ export class ComplianceReporter {
     }
 
     private analyzeTransfers(events: AuditEvent[]): DataHandlingReport['transfers'] {
-        const transferEvents = events.filter(e => e._type === 'external_transfer');
+        const transferEvents = events.filter(e => e.type === 'external_transfer');
         return transferEvents.map(e => ({
             destination: String(e.details?.metadata?.destination || 'Unknown'),
             dataTypes: ['Context Data'],
@@ -514,7 +514,7 @@ export class ComplianceReporter {
             report.reportType,
             report.framework,
             report.generatedAt.toISOString(),
-            report.summary.String(complianceScore),
+            report.summary.complianceScore.toString(),
             report.summary.riskLevel
         ].join(','));
 

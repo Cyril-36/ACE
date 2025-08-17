@@ -18,7 +18,7 @@ import {
   HealthStatus,
   ModuleHealth,
 } from "./services/background/types";
-import { compatibilityIntegration, initializeCompatibility } from "./services/compatibility/compatibilityIntegration";
+import { _compatibilityIntegration, _initializeCompatibility } from "./services/compatibility/compatibilityIntegration";
 import { optimizationService } from "./services/performance/optimizationService";
 
 // Type definitions for event payloads
@@ -171,15 +171,15 @@ class BackgroundServiceWorker {
       optimizationService.startTimer('background_initialization');
 
       // Initialize cross-browser compatibility first
-      await initializeCompatibility({
-        enablePolyfills: true,
+      await _initializeCompatibility({
+        _enablePolyfills: true,
         enableErrorReporting: true,
         enablePerformanceMonitoring: true,
         storageStrategy: 'auto',
       });
 
       // Initialize cross-browser API
-      void compatibilityIntegration.getAPI();
+      void _compatibilityIntegration.getAPI();
       console.log("[BackgroundServiceWorker] Cross-browser compatibility initialized");
 
       // Initialize i18n
@@ -315,7 +315,7 @@ class BackgroundServiceWorker {
       }).catch(console.error);
 
       // Use pre-built handler map for better performance
-      const messageType = typeof message._type === 'string' ? message.type : String(message.type);
+      const messageType = typeof message.type === 'string' ? message.type : String(message.type);
       const handler = this.messageHandlers.get(messageType);
       if (handler) {
         try {
@@ -355,7 +355,7 @@ class BackgroundServiceWorker {
 
   private setupTabHandlers(): void {
     chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-      if (changeInfo._status === "complete" && tab.url) {
+      if (changeInfo.status === "complete" && tab.url) {
         void this.handleTabUpdate(tabId, tab.url);
       }
     });
@@ -528,13 +528,13 @@ class BackgroundServiceWorker {
   }
 
   private async handleIDETokenLimitApproaching(data: IDETokenUsageData): Promise<void> {
-    console.warn('[BackgroundServiceWorker] IDE token limit approaching:', data._usage);
+    console.warn('[BackgroundServiceWorker] IDE token limit approaching:', data.usage);
     
     // Emit token limit event for IDE context
     await this.eventBus.emit({
       _type: BackgroundEventType.SUMMARY_TRIGGER,
       payload: {
-        contextId: `ide_${data._usage.platform}_${Date.now()}`,
+        contextId: `ide_${data.usage.platform}_${Date.now()}`,
         reason: 'token_limit',
         source: ContextSource.IDE,
         options: {
@@ -548,7 +548,7 @@ class BackgroundServiceWorker {
 
   private async handleSearchRequest(query: string, sendResponse: (response?: { success: boolean; results?: Array<Record<string, string | number>>; error?: string }) => void): Promise<void> {
     try {
-      const results = await this.searchOrchestrator._search({ query, filters: {} });
+      const results = await this.searchOrchestrator.search({ query, filters: {} });
       sendResponse({
         success: true,
         results: results.map(r => ({
@@ -693,10 +693,10 @@ class BackgroundServiceWorker {
     });
 
     return {
-      status: this.eventBus.isHealthy() ? "healthy" : "degraded",
+      _status: this.eventBus.isHealthy() ? "healthy" : "degraded",
       timestamp: Date.now(),
       modules: moduleHealth,
-      metrics: {
+      _metrics: {
         uptime: Date.now() - this.startTime,
         memoryUsage: 0, // Would need actual memory monitoring
         eventCount: this.eventBus.getMetrics().eventsProcessed,

@@ -16,7 +16,7 @@ function createMockContext(_overrides: Partial<Context> = {}): Context {
 
     return {
         _id: 'test-_context-id',
-        _content: 'test content',
+        content: 'test content',
         _summary: undefined,
         _metadata: _defaultMetadata,
         _encrypted: false,
@@ -103,11 +103,11 @@ describe('EnterpriseIntegration', () => {
 
         it('should enforce policies on _context', async () => {
             const _context = createMockContext({
-                _content: JSON.stringify({
+                content: JSON.stringify({
                     type: 'setting',
-                    _setting: 'localOnly',
-                    _value: false,
-                    _timestamp: new Date()
+                    setting: 'localOnly',
+                    value: false,
+                    timestamp: new Date()
                 })
             });
 
@@ -161,7 +161,7 @@ describe('EnterpriseIntegration', () => {
             await _disabledIntegration.initialize(_disabledSettings);
 
             const _context = createMockContext({
-                _content: JSON.stringify({ _type: 'setting', _setting: 'anything', _value: 'anything' })
+                content: JSON.stringify({ type: 'setting', setting: 'anything', value: 'anything' })
             });
             const _result = await _disabledIntegration.enforcePolicy(_context);
             
@@ -345,7 +345,7 @@ describe('EnterpriseIntegration', () => {
             await _disabledIntegration.initialize(_disabledSettings);
 
             const _threats = await _disabledIntegration.detectThreats(createMockContext({
-                _content: JSON.stringify({ accessCount: 200 })
+                content: JSON.stringify({ accessCount: 200 })
             }));
             
             expect(_threats).toHaveLength(0);

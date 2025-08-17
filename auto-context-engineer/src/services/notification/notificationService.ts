@@ -19,7 +19,7 @@ export class NotificationService {
       types: {
         errors: true,
         warnings: true,
-        success: true,
+        _success: true,
         info: true,
       },
       position: 'top-right',
@@ -35,12 +35,12 @@ export class NotificationService {
    * Map notification type to config key
    */
   private getConfigKey(type: string): keyof NotificationConfig['types'] {
-    const typeMap: Record<string, keyof NotificationConfig['types']> = {
-      'error': 'errors',
-      'warning': 'warnings',
-      'success': 'success',
-      'info': 'info'
-    };
+          const typeMap: Record<string, keyof NotificationConfig['types']> = {
+        'error': 'errors',
+        'warning': 'warnings',
+        'success': '_success',
+        'info': 'info'
+      };
     return typeMap[type] || type as keyof NotificationConfig['types'];
   }
 

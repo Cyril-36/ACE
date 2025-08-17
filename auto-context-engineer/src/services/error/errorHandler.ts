@@ -257,11 +257,11 @@ export class ErrorHandler {
         if (result.success) {
           return {
             ...result,
-            fallbackUsed: strategy._name,
+            fallbackUsed: strategy.name,
           };
         }
       } catch (recoveryError) {
-        console.warn(`Recovery strategy ${strategy._name} failed:`, recoveryError);
+        console.warn(`Recovery strategy ${strategy.name} failed:`, recoveryError);
       }
     }
 

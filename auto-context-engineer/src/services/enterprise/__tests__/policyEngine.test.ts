@@ -1,6 +1,6 @@
 // Tests for Enterprise Policy Engine
 import { describe, it, expect, beforeEach } from 'vitest';
-import { PolicyEngine, PolicyRule, EnterpriseConfig } from '../_policyEngine';
+import { PolicyEngine, PolicyRule, EnterpriseConfig } from '../policyEngine';
 
 describe('PolicyEngine', () => {
     let _policyEngine: PolicyEngine;
@@ -196,7 +196,7 @@ describe('PolicyEngine', () => {
             };
 
             const _violations = await _policyEngine.evaluatePolicy(_context);
-            const _multiConditionViolation = violations.find(v => v.ruleId === 'multi-condition-_rule');
+            const _multiConditionViolation = _violations.find(v => v.ruleId === 'multi-condition-_rule');
             expect(_multiConditionViolation).toBeDefined();
         });
     });
@@ -274,7 +274,7 @@ describe('PolicyEngine', () => {
         });
 
         it('should return enterprise _config', () => {
-            const _config = policyEngine.getEnterpriseConfig();
+            const _config = _policyEngine.getEnterpriseConfig();
             expect(_config).toEqual(_mockConfig);
         });
 
@@ -282,14 +282,14 @@ describe('PolicyEngine', () => {
             const _updates = {
                 _organizationName: 'Updated Organization',
                 _policies: {
-                    ...mockConfig.policies,
+                    ..._mockConfig.policies,
                     _maxStorageSize: 200 * 1024 * 1024
                 }
             };
 
             await expect(_policyEngine.updateEnterpriseConfig(_updates)).resolves.not.toThrow();
             
-            const _updatedConfig = policyEngine.getEnterpriseConfig();
+            const _updatedConfig = _policyEngine.getEnterpriseConfig();
             expect(_updatedConfig?.organizationName).toBe('Updated Organization');
         });
     });

@@ -61,7 +61,7 @@ describe('LocalSummarizationProvider', () => {
   it('should respect maxTokens option', async () => {
     const longText = 'This is a sentence. '.repeat(100);
     
-    const result = await provider.summarize(longText, { _maxTokens: 50 });
+    const result = await provider.summarize(longText, { maxTokens: 50 });
     
     expect(result.tokens).toBeLessThanOrEqual(50);
   });
@@ -123,7 +123,7 @@ describe('CloudProviderWrapper', () => {
   it('should be available when API client is present', () => {
     expect(provider.available).toBe(true);
     expect(provider.id).toBe('openai');
-    expect(provider._name).toBe('OpenAI');
+    expect(provider.name).toBe('OpenAI');
     expect(provider.priority).toBe(1);
   });
 
@@ -159,8 +159,8 @@ describe('CloudProviderWrapper', () => {
 
   it('should pass options to API client', async () => {
     const options: SummarizationOptions = {
-      _maxTokens: 100,
-      _temperature: 0.7,
+      maxTokens: 100,
+      temperature: 0.7,
       quality: 'balanced',
     };
     
@@ -442,8 +442,8 @@ describe('CloudFallbackService', () => {
 
   it('should pass summarization options to providers', async () => {
     const options: SummarizationOptions = {
-      _maxTokens: 100,
-      _temperature: 0.8,
+      maxTokens: 100,
+      temperature: 0.8,
       quality: 'quality',
     };
     
